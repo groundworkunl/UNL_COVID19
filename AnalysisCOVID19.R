@@ -43,7 +43,7 @@ t_test <- function(data_a, data_b){
   cat("P(|t| >= ", abs(t), ") =", p ,"\n")
 }
 
-# testing all variables between male and female
+# testing all variables between freshman vs others
 t_test(covid.f$awareness, covid.o$awareness)
 t_test(covid.f$testing, covid.o$testing)
 t_test(covid.f$tuition, covid.o$tuition)
@@ -52,6 +52,19 @@ t_test(covid.f$fee, covid.o$fee)
 t_test(covid.f$mask, covid.o$mask)
 t_test(covid.f$hygiene, covid.o$hygiene)
 t_test(covid.f$satisfaction, covid.o$satisfaction)
+
+covid.female <- covid[covid$gender == "Female",]
+covid.male <- covid[covid$gender == "Male",]
+
+# testing all variables between female and male
+t_test(covid.female$awareness, covid.male$awareness)
+t_test(covid.female$testing, covid.male$testing)
+t_test(covid.female$tuition, covid.male$tuition)
+t_test(covid.female$academic, covid.male$academic)
+t_test(covid.female$fee, covid.male$fee)
+t_test(covid.female$mask, covid.male$mask)
+t_test(covid.female$hygiene, covid.male$hygiene)
+t_test(covid.female$satisfaction, covid.male$satisfaction)
 
 # testing difference between colleges
 covid.cas <- covid[covid$college == "College of Arts and Sciences",]
