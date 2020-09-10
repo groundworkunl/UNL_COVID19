@@ -1,11 +1,12 @@
 # Testing Freshman and Others difference
 # 
 source("TidyAndExploreCOVID19.R")
+
 covid <- covid %>%
   mutate(isFreshman = (class == "Freshman"))
 
-covid.f <- covid[covid$isFreshman == TRUE,]
-covid.o <- covid[covid$isFreshman == FALSE,]
+covid.f <- covid[covid$isFreshman,]
+covid.o <- covid[!covid$isFreshman,]
 
 # Comparison between freshman and other
 mean.f <- mean(covid.f$awareness)
@@ -39,7 +40,7 @@ t_test <- function(data_a, data_b){
   se <-sqrt((sd.1^2)/n.1 + (sd.2^2)/n.2)
   t <-(mean.1-mean.2)/se
   cat("t-score: ", t, "\n")
-  p <- 2*((1-pt(abs(t), df=min(n.1, n.2))))
+  p <- 2*((1-pt(abs(t), df=n.1+n.2-2)))
   cat("P(|t| >= ", abs(t), ") =", p ,"\n")
 }
 
@@ -80,7 +81,7 @@ covid.fm <- covid[covid$gender == "Female",]
 t_test(covid.m$satisfaction, covid.fm$satisfaction)
 
 # Simple Linear Regressions
-lmod <- lm(satisfaction ~ awareness + mask + testing + academic + tuition + fee + hygiene, covid)
+lmod <- lm(satisfaction ~ awareness + hygiene + mask, covid)
 summary(lmod)
 plot(lmod)
 

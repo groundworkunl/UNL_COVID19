@@ -24,10 +24,11 @@ covid <- covid %>%
 write.csv(covid,"COVID19/covidgw.csv")
 covid <- read_csv("COVID19/covidgw.csv")
 
+
 # Summarizing Clean Data (No Errors in General)
 covid$class[covid$class == "Graduate Student"] <- 'Graduate'
 
-sampleClass <- covid %>%
+sampleClass <- covid %>% 
   select(class) %>%
   mutate(count = 1) %>%
   group_by(class) %>%
@@ -96,7 +97,7 @@ sampleClass <- sampleClass %>%
 
 classComp <- rbind(classDist, sampleClass)
 
-ggplot(classComp, aes(fill=Type, y=Percentage, x=`Class Level`)) +
+ggplot(data = classComp, aes(fill=Type, y=Percentage, x=`Class Level`)) +
   geom_bar(position="dodge", stat="identity") + 
   ggtitle("Class Level Distribution Comparison between Actual vs. Sample") +
   theme_minimal()
@@ -207,7 +208,7 @@ tuition <- tuition[complete.cases(tuition),]
 ggplot(tuition, aes(x = tuition, y=freq)) +
   geom_bar(position="dodge", stat="identity", color="blue", fill="steelblue") +
   theme_minimal() +
-  ggtitle("Distribution of Testing")
+  ggtitle("Distribution of Tuition")
 
 # Academic
 academic <- covid %>%
